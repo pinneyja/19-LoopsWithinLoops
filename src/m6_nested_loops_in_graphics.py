@@ -3,8 +3,8 @@ This project demonstrates NESTED LOOPS (i.e., loops within loops)
 in the context of TWO-DIMENSIONAL GRAPHICS.
 
 Authors: David Mutchler, Valerie Galluzzi, Mark Hays, Amanda Stouder,
-         their colleagues and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         their colleagues and Jacob Pinney.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import rosegraphics as rg
 
@@ -80,9 +80,31 @@ def draw_L(window, circle, r, c):
     and m and n are small, positive integers.
     """
     # ------------------------------------------------------------------
-    # TODO: 2. Implement and test this function.
+    # DONE: 2. Implement and test this function.
     #     The testing code is already written for you (above).
     # ------------------------------------------------------------------
+    original_x = circle.center.x
+    start_x = circle.center.x
+    start_y = circle.center.y
+    increment_radius = circle.radius * 2
+    fill_color = circle.fill_color
+    for k in range(r + 3):
+        if k < r:
+            for i in range(3):
+                circle = rg.Circle(rg.Point(start_x, start_y), increment_radius / 2)
+                circle.fill_color = fill_color
+                circle.attach_to(window)
+                window.render(0.1)
+                start_x = start_x + increment_radius
+        else:
+            for i in range(3 + c):
+                circle = rg.Circle(rg.Point(start_x, start_y), increment_radius / 2)
+                circle.fill_color = fill_color
+                circle.attach_to(window)
+                window.render(0.1)
+                start_x = start_x + increment_radius
+        start_x = original_x
+        start_y = start_y + increment_radius
 
 
 def run_test_draw_wall_on_right():
@@ -121,9 +143,27 @@ def draw_wall_on_right(rectangle, n, window):
     and n is a small, positive integer.
     """
     # ------------------------------------------------------------------
-    # TODO: 3. Implement and test this function.
+    # DONE: 3. Implement and test this function.
     #     The testing code is already written for you (above).
     # ------------------------------------------------------------------
+    half_width = rectangle.get_width() / 2
+    half_height = rectangle.get_height() / 2
+    width = rectangle.get_width()
+    height = rectangle.get_height()
+    original_x = rectangle.get_center().x
+    original_y = rectangle.get_center().y
+    mutated_x = original_x
+    mutated_y = original_y
+    for k in range(n):
+        for i in range(k + 1):
+            top_left = rg.Point(mutated_x - half_width, mutated_y - half_height)
+            bottom_right = rg.Point(mutated_x + half_width, mutated_y + half_height)
+            mutated_x = mutated_x - width
+            rect = rg.Rectangle(top_left, bottom_right)
+            rect.attach_to(window)
+            window.render(0.1)
+        mutated_y = mutated_y + height
+        mutated_x = original_x
 
 
 # ----------------------------------------------------------------------
